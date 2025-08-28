@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>yashaswini-madhusudan • Portfolio</title>
+  <meta name="description" content="Portfolio website showcasing projects, blogs, skills, resume and contact." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Ccircle cx='128' cy='128' r='120' fill='%231e40af'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='120' fill='%23fff' font-family='Segoe UI, Roboto, Arial'%3EA%3C/text%3E%3C/svg%3E" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Inter', 'ui-sans-serif', 'system-ui', 'Arial'],
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(0,0,0,0.08)'
+          }
+        }
+      },
+      darkMode: 'class'
+    }
+  </script>
+  <style>
+    /* Smooth scrolling */
+    html { scroll-behavior: smooth; }
+    /* Simple keyframes */
+    @keyframes float { 0% { transform: translateY(0);} 50% { transform: translateY(-8px);} 100% { transform: translateY(0);} }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(16px);} to { opacity:1; transform: translateY(0);} }
+    /* Particle canvas sits behind content */
+    #bg-canvas { position: fixed; inset: 0; z-index: -1; }
+    /* Hide default focus outline only for mouse, keep for keyboard */
+    :focus:not(:focus-visible) { outline: none; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-display">
+  <!-- Background Canvas (particles) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Nav -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-white/60 dark:bg-slate-900/50 border-b border-slate-200/50 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4">
+      <a href="#home" class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-2xl bg-indigo-600 text-white shadow-soft">A</span>
+        <span class="font-semibold tracking-tight">Yashaswini-Madhusudan</span>
+      </a>
+      <nav class="ml-auto hidden md:flex items-center gap-6 text-sm">
+        <a class="hover:text-indigo-600" href="#projects">Projects</a>
+        <a class="hover:text-indigo-600" href="#skills">Skills</a>
+        <a class="hover:text-indigo-600" href="#blog">Blog</a>
+        <a class="hover:text-indigo-600" href="#contact">Contact</a>
+        <a class="hover:text-indigo-600" href="#resume">Resume</a>
+      </nav>
+      <div class="ml-auto md:ml-2 flex items-center gap-2">
+        <button id="themeToggle" class="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="Toggle dark mode">🌓</button>
+        <a href="https://github.com/yashaswini1303" target="_blank" rel="noreferrer" class="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="relative">
+    <div class="max-w-6xl mx-auto px-4 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
+      <div class="[animation:fadeUp_.8s_ease_.1s_both]">
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+          Hi, I'm <span class="text-indigo-600">Yashaswini madhusudan</span><br />
+          <span id="typing" class="text-slate-700 dark:text-slate-300 text-2xl md:text-3xl"></span>
+        </h1>
+        <p class="mt-6 text-slate-600 dark:text-slate-400 max-w-prose">
+          Full‑stack developer building delightful web experiences. I love data, design, and shipping polished products.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#projects" class="px-5 py-2.5 rounded-2xl bg-indigo-600 text-white shadow-soft hover:opacity-90">View Projects</a>
+          <a href="#contact" class="px-5 py-2.5 rounded-2xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">Contact Me</a>
+        </div>
+        <div class="mt-6 flex items-center gap-4 text-slate-500">
+          <a class="hover:text-indigo-600" href="https://www.linkedin.com/in/yashaswini-madhusudan" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.15c-.97 0-1.75-.79-1.75-1.75s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.75-1.75 1.75zm13.5 11.15h-3v-5.6c0-1.34-.03-3.06-1.87-3.06-1.88 0-2.17 1.46-2.17 2.97v5.69h-3v-10h2.88v1.37h.04c.4-.76 1.38-1.56 2.83-1.56 3.03 0 3.59 1.99 3.59 4.58v5.61z"/></svg>
+          </a>
+          <a class="hover:text-indigo-600" href="mailto:yashaswinim1303@gmail.com" aria-label="Email">
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 13.065 0 6V5l12 6.065L24 5v1l-12 7.065z"/><path d="M0 7v12h24V7l-12 7L0 7z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="[animation:float_4s_ease-in-out_infinite]">
+        <!--div class="relative">
+          <div class="absolute -inset-4 bg-gradient-to-tr from-indigo-600/20 via-purple-500/20 to-pink-500/20 blur-2xl rounded-3xl"></div>
+          <img alt="profile" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop" class="relative rounded-3xl w-full shadow-soft border border-white/50 dark:border-slate-800" />
+        </div-->
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="py-16 md:py-24 border-t border-slate-200/70 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-end justify-between gap-6 mb-8">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold">Projects</h2>
+          <p class="text-slate-600 dark:text-slate-400">Hand‑picked work and auto‑fetched GitHub repos.</p>
+        </div>
+        <div>
+          <label class="text-sm text-slate-500">GitHub username</label>
+          <input id="ghUser" class="block mt-1 w-48 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" placeholder="yashaswini1303" />
+        </div>
+      </div>
+
+      <!-- Featured projects (manual) -->
+      <div class="grid md:grid-cols-2 gap-6 mb-10">
+        <article class="rounded-3xl border border-slate-200 dark:border-slate-800 p-5 hover:shadow-soft transition bg-white/70 dark:bg-slate-900/60">
+          <h3 class="text-xl font-semibold">objects measurements</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">clear, specific, measurable, reliable, and outcome-focused to ensure accurate evaluation and impactful results.</p>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <span class="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-200">React</span>
+            <span class="px-2 py-1 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">Node</span>
+            <span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200">MongoDB</span>
+          </div>
+        </article>
+        <article class="rounded-3xl border border-slate-200 dark:border-slate-800 p-5 hover:shadow-soft transition bg-white/70 dark:bg-slate-900/60">
+          <h3 class="text-xl font-semibold">recipes book </h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">well-defined, creative, user-friendly, organized, and outcome-focused to ensure an engaging and accurate recipe collection.</p>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <span class="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-200">Python</span>
+            <span class="px-2 py-1 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">Flask</span>
+            <span class="px-2 py-1 rounded-full bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/40 dark:text-fuchsia-200">NLP</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Auto-fetched GH repos -->
+      <!--div>
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-lg font-semibold">Latest GitHub Repos</h3>
+          <button id="loadRepos" class="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">Reload</button>
+        </div>
+        <div id="repoGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </div>
+  </section!-->
+
+  <!-- Skills -->
+  <section id="skills" class="py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Skills</h2>
+      <div class="flex flex-wrap gap-3">
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">HTML5</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">CSS3 / Tailwind</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">JavaScript</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">React</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">Node.js</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">Python</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">Flask</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">MongoDB</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">Git / GitHub Actions</span>
+        <span class="px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700">Docker</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog" class="py-16 md:py-24 border-y border-slate-200/70 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-end justify-between mb-6">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold">Blog</h2>
+          <p class="text-slate-600 dark:text-slate-400">Short write‑ups on projects and tech notes.</p>
+        </div>
+        <button id="newPostBtn" class="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">New Post</button>
+      </div>
+      <div id="blogList" class="grid md:grid-cols-2 gap-4"></div>
+    </div>
+  </section>
+
+  <!-- Resume -->
+  <!--section id="resume" class="py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold">Resume</h2>
+      <p class="mt-2 text-slate-600 dark:text-slate-400">Download my latest resume as PDF.</p>
+      <a href="#" id="resumeLink" class="inline-block mt-5 px-5 py-2.5 rounded-2xl bg-indigo-600 text-white shadow-soft hover:opacity-90">Download Resume</a>
+      <p class="mt-2 text-xs text-slate-500">Replace the resume link in the source (<code>resumeLink.href</code>).</p>
+    </div>
+  </section!-->
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 md:py-24">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold">Contact</h2>
+      <p class="mt-2 text-slate-600 dark:text-slate-400">Send me a message — I usually reply within a day.</p>
+      <form id="contactForm" class="mt-6 grid gap-4">
+        <input required class="px-4 py-3 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" placeholder="Your name" />
+        <input required type="email" class="px-4 py-3 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" placeholder="Email address" />
+        <textarea required rows="5" class="px-4 py-3 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" placeholder="Message"></textarea>
+        <div class="flex items-center gap-3">
+          <button class="px-5 py-2.5 rounded-2xl bg-indigo-600 text-white shadow-soft hover:opacity-90" type="submit">Send</button>
+          <span id="contactMsg" class="text-sm text-slate-500"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="py-10 text-center text-sm text-slate-500">
+    © <span id="year"></span> yashaswini M— Built with ❤️ and Tailwind
+  </footer>
+
+  <script>
+    // ======== SETTINGS ========
+    const GITHUB_USERNAME = 'yashaswini1303'; // TODO: change to your GitHub username
+    const RESUME_URL = 'https://example.com/Resume.pdf'; // TODO: change to your resume link
+
+    // ======== THEME TOGGLE ========
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const userPref = localStorage.getItem('theme');
+    if (userPref === 'dark' || (!userPref && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      root.classList.add('dark');
+    }
+    themeToggle.addEventListener('click', () => {
+      root.classList.toggle('dark');
+      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // ======== YEAR & RESUME LINK ========
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('resumeLink').href = RESUME_URL;
+
+    // ======== TYPING EFFECT ========
+    const typingEl = document.getElementById('typing');
+    const roles = ['Full‑Stack Developer', ' UI desginer', ' passinate about cloud '];
+    let roleIdx = 0, charIdx = 0, deleting = false;
+    function typeLoop(){
+      const current = roles[roleIdx];
+      typingEl.textContent = current.slice(0, charIdx) + (charIdx % 2 === 0 ? '|' : '');
+      if(!deleting){
+        charIdx++;
+        if(charIdx > current.length + 6){ deleting = true; }
+      } else {
+        charIdx--;
+        if(charIdx === 0){ deleting = false; roleIdx = (roleIdx + 1) % roles.length; }
+      }
+      setTimeout(typeLoop, deleting ? 60 : 120);
+    }
+    typeLoop();
+
+    // ======== PARTICLE BACKGROUND ========
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    addEventListener('resize', resize); resize();
+    function spawn(){
+      particles = Array.from({length: Math.min(120, Math.floor(W*H/18000))}, () => ({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        vx: (Math.random()-0.5)*0.4,
+        vy: (Math.random()-0.5)*0.4,
+        r: Math.random()*1.8+0.2
+      }));
+    }
+    spawn();
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      ctx.globalAlpha = 0.8;
+      ctx.fillStyle = getComputedStyle(document.body).color;
+      particles.forEach(p=>{
+        p.x += p.vx; p.y += p.vy;
+        if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      });
+      // connect nearby
+      ctx.globalAlpha = 0.08;
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d2 = dx*dx + dy*dy;
+          if(d2 < 120*120){
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = getComputedStyle(document.body).color;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // ======== GITHUB REPOS ========
+    const ghUserInput = document.getElementById('ghUser');
+    const repoGrid = document.getElementById('repoGrid');
+    ghUserInput.value = GITHUB_USERNAME;
+
+    async function loadRepos(){
+      const user = ghUserInput.value.trim() || GITHUB_USERNAME;
+      repoGrid.innerHTML = '<div class="col-span-full text-sm text-slate-500">Loading repos for <b>'+user+'</b>…</div>';
+      try{
+        const res = await fetch(`https://api.github.com/users/${user}/repos?sort=updated&per_page=9`);
+        if(!res.ok) throw new Error('GitHub API error: '+res.status);
+        const repos = await res.json();
+        if(!Array.isArray(repos)) throw new Error('Unexpected response');
+        repoGrid.innerHTML = '';
+        repos.slice(0,9).forEach(r => {
+          const card = document.createElement('a');
+          card.href = r.html_url;
+          card.target = '_blank';
+          card.rel = 'noreferrer';
+          card.className = 'block rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white/70 dark:bg-slate-900/60 hover:shadow-soft transition';
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <h4 class="font-semibold truncate pr-2">${r.name}</h4>
+              <span class="text-xs px-2 py-0.5 rounded-full border border-slate-300 dark:border-slate-700">${r.visibility}</span>
+            </div>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-2">${r.description || 'No description provided.'}</p>
+            <div class="mt-3 flex items-center gap-3 text-xs text-slate-500">
+              <span>★ ${r.stargazers_count}</span>
+              <span>⑂ ${r.forks_count}</span>
+              <span>⬢ ${r.language || '—'}</span>
+              <span>⏱️ ${new Date(r.updated_at).toLocaleDateString()}</span>
+            </div>`;
+          repoGrid.appendChild(card);
+        });
+        if(repoGrid.children.length === 0){
+          repoGrid.innerHTML = '<div class="col-span-full text-sm text-slate-500">No repositories found.</div>';
+        }
+      } catch(err){
+        repoGrid.innerHTML = `<div class='col-span-full text-sm text-rose-600'>Failed to load repos: ${err.message}</div>`;
+      }
+    }
+    document.getElementById('loadRepos').addEventListener('click', loadRepos);
+    loadRepos();
+
+    // ======== BLOG (localStorage) ========
+    const blogList = document.getElementById('blogList');
+    const newPostBtn = document.getElementById('newPostBtn');
+    function getPosts(){
+      try { return JSON.parse(localStorage.getItem('blogPosts')||'[]'); } catch { return []; }
+    }
+    function savePosts(posts){ localStorage.setItem('blogPosts', JSON.stringify(posts)); }
+    function renderPosts(){
+      const posts = getPosts();
+      blogList.innerHTML = '';
+      posts.forEach((p, idx) => {
+        const card = document.createElement('article');
+        card.className = 'rounded-3xl border border-slate-200 dark:border-slate-800 p-5 bg-white/70 dark:bg-slate-900/60 hover:shadow-soft';
+        card.innerHTML = `
+          <h3 class="text-xl font-semibold">${p.title}</h3>
+          <p class="text-xs text-slate-500">${new Date(p.date).toLocaleString()}</p>
+          <p class="mt-3 text-slate-700 dark:text-slate-300 whitespace-pre-wrap">${p.content}</p>
+          <div class="mt-4 flex gap-2 text-sm">
+            <button data-edit="${idx}" class="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700">Edit</button>
+            <button data-del="${idx}" class="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700">Delete</button>
+          </div>`;
+        blogList.appendChild(card);
+      });
+      if(posts.length === 0){
+        blogList.innerHTML = '<p class="text-sm text-slate-500">No posts yet. Click “New Post”.</p>';
+      }
+    }
+    newPostBtn.addEventListener('click', () => {
+      const title = prompt('Post title:'); if(!title) return;
+      const content = prompt('Write your post:'); if(content == null) return;
+      const posts = getPosts();
+      posts.unshift({ title, content, date: Date.now() });
+      savePosts(posts); renderPosts();
+    });
+    blogList.addEventListener('click', (e) => {
+      if(e.target.dataset.edit){
+        const idx = +e.target.dataset.edit; const posts = getPosts();
+        const title = prompt('Edit title:', posts[idx].title); if(!title) return;
+        const content = prompt('Edit content:', posts[idx].content); if(content == null) return;
+        posts[idx] = { ...posts[idx], title, content }; savePosts(posts); renderPosts();
+      }
+      if(e.target.dataset.del){
+        const idx = +e.target.dataset.del; const posts = getPosts();
+        if(confirm('Delete this post?')){ posts.splice(idx,1); savePosts(posts); renderPosts(); }
+      }
+    });
+    renderPosts();
+
+    // ======== CONTACT (demo only) ========
+    const contactForm = document.getElementById('contactForm');
+    const contactMsg = document.getElementById('contactMsg');
+    contactForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      contactMsg.textContent = 'Thanks! This demo form just logs to console.';
+      console.log('Contact Form Submission:', new FormData(contactForm));
+      contactForm.reset();
+      setTimeout(()=> contactMsg.textContent = '', 4000);
+    });
+  </script>
+</body>
+</html>
